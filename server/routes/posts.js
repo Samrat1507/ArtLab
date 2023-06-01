@@ -1,22 +1,19 @@
 import express from "express";
-
-import jwt from "jsonwebtoken";
-import { get } from "mongoose";
 import multer from "multer";
+import Posts from "../models/posts.js";
 
-// Create multer storage configuration
+
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "uploads");
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.originalname);
-    },
-  });
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
-// Create multer upload instance with file size limit
+
 const upload = multer({ storage: storage });
-
 
 const router = express.Router();
 
@@ -25,10 +22,20 @@ router.route("/feed").get((req,res )=>{
     res.send("OK");
 })
 
-router.route("/create").post(upload.single('image'), (req,res)=>{
-    const data=req.body
-    console.log(data)
-    res.send("ok")
+router.route("/create").post(upload.single('file'), async (req,res)=>{
+    try{
+      const post = new Posts({
+        title: req.body.title,
+        description: req.body.description,
+        amt: req.body.amt,
+        art_image: req.file.filename,
+      })
+
+      const savedPost = await post.save()
+      res.status(200).send(JSON.stringify({'message': 'Posted!'}))
+    } catch(error){
+      res.status(500).send(JSON.stringify({'message': 'Internal server error'}))
+    }
 })
 
 export default router

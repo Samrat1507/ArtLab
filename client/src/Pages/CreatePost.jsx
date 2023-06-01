@@ -4,12 +4,12 @@ import axios from 'axios';
 
 const CreatePost = () => {
   const nav = new useNavigate();
-  const [img, setimg] = useState("");
 
-  const [details, setDetails] = useState({
+  const [formData, setFormData] = useState({
     title: "",
-    desc: "",
-    amt: "0",
+    description: "",
+    amt: "",
+    file: null,
   });
 
   useEffect(() => {
@@ -36,34 +36,28 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { title, description, amt, file } = formData;
 
-    if(img.size > 5*1024*1024){
-      console.log("too big")
-      return
+    const data = new FormData(); 
+    data.append("title", title);
+    data.append("description", description);
+    data.append("amt", amt);
+    data.append("file", file);
+
+    try {
+      await axios.post("http://localhost:5000/post/create", data)
+      alert("Podcast added successfully");
+    } catch (error) {
+      console.error("Error adding podcast:", error);
     }
-    const formData = new FormData();
-    formData.append("image", img);
-    formData.append("title", details.title);
-    formData.append("desc", details.desc);
-    formData.append("amt", details.amt);
-    console.log(formData);
-
-    
-    axios.post('http://localhost:5000/post/create', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then((response) => {
-        console.log('Image uploaded successfully');
-      })
-      .catch((error) => {
-        console.error('Error uploading image', error);
-      });
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setDetails({ ...details, [name]: value });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, file: e.target.files[0] });
   };
 
   return (
@@ -78,19 +72,22 @@ const CreatePost = () => {
             placeholder="Title"
             onChange={handleChange}
             name="title"
+            value={formData.title}
             className="px-5 py-2 rounded-xl outline-none"
           />
           <input
             type="text"
             placeholder="Description"
             onChange={handleChange}
-            name="desc"
+            name="description"
+            value={formData.description}
             className="px-5 py-2 rounded-xl outline-none"
           />
           <input
             type="text"
             placeholder="Starting Amount"
             onChange={handleChange}
+            value={formData.amt}
             name="amt"
             className="px-5 py-2 rounded-xl outline-none"
           />
@@ -101,13 +98,7 @@ const CreatePost = () => {
         </div>
         <div className="flex flex-col items-center justify-center rounded-lg text-white">
           <div className="flex-1 flex flex-col items-center justify-center glassmorphism rounded-xl md:px-10 px-2 py-5">
-            <input
-              type="file"
-              id="file-upload"
-              accept="image/*"
-              name="image"
-              onChange={(e) => setimg(e.target.files[0])}
-            />
+          <input type="file" name="file" onChange={handleFileChange} required />
             <label htmlFor="file-upload" className="py-10 text-xl">
               Upload a File
             </label>

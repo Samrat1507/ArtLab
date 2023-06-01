@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 const userSchema = mongoose.Schema({
   artist_name: { type: String, unique: true, required: true },
   title: { type: String, unique: true, required: true },
+  description: { type: String },
+  amt: { type: String },
   reportCount: {
     type: Number,
     default: 0,
