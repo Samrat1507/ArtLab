@@ -42,5 +42,16 @@ router.route("/create").post(upload.single('file'), async (req,res)=>{
   }
 });
 
+router.route("/feed").get( async (req, res) => {
+  try {
+    const getPosts = await Posts.find();
+    console.log(getPosts);
+    res.json(getPosts);
+   
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching posts", error });
+  }
+});
+
 
 export default router

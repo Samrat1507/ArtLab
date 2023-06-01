@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
-  artist_name: { type: String, unique: true, required: true },
-  title: { type: String, unique: true, required: true },
+  artist_name: { type: String, required: true },
+  title: { type: String, required: true },
   description: { type: String },
   amt: { type: String },
   reportCount: {
