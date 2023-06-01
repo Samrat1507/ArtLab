@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import starry from '../assets/starry-night.jpg'
 import vincent from '../assets/vincent.jpg'
+import axios from "axios";
 
 const PostCard = ({title, desc, img, artist, profile_pic}) => {
   return(
@@ -25,33 +26,17 @@ const PostCard = ({title, desc, img, artist, profile_pic}) => {
 
 export const Feed = () => {
   const nav = new useNavigate();
-
-  const [posts, setposts] = useState([
-  {
-    'title' : "Starry Night",
-    'desc' : 'A starry night',
-    'img' : starry,
-    'profile_pic' : vincent,
-    'artist_name' : "Vincent van Gogh",
-  },
-  {
-    'title' : "Starry Night",
-    'desc' : 'A starry night',
-    'img' : starry,
-    'profile_pic' : vincent,
-    'artist_name' : "Vincent van Gogh",
-  },
-  {
-    'title' : "Starry Night",
-    'desc' : 'A starry night',
-    'img' : starry,
-    'profile_pic' : vincent,
-    'artist_name' : "Vincent van Gogh",
-  },
-
-])
+  
+  const [posts, setposts] = useState([])
 
   useEffect(() => {
+
+    const fetchPosts = async () => {
+      const response = await axios.get('http://localhost:5000/post/feed');
+      setposts(response.data);
+      console.log(posts);
+      console.log(response);
+    };
       const ftechData = async() => {
         const token = sessionStorage.getItem("userToken")
         const res = await fetch('http://localhost:5000/user/auth', {
@@ -72,7 +57,8 @@ export const Feed = () => {
       }
       
 
-      ftechData()
+      ftechData();
+      fetchPosts();
   }, []);
 
   // const getData = async() => {
