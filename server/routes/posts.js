@@ -23,19 +23,24 @@ router.route("/feed").get((req,res )=>{
 })
 
 router.route("/create").post(upload.single('file'), async (req,res)=>{
-    try{
-      const post = new Posts({
-        title: req.body.title,
-        description: req.body.description,
-        amt: req.body.amt,
-        art_image: req.file.filename,
-      })
+  try {
+    const post = new Posts({
+      title: req.body.title,
+      description: req.body.description,
+      amt: req.body.amt,
+      artist_name: req.body.artist_name,
+       // Use fileType instead of req.body.type
+      
+      art_image: req.file.filename,
+    });
 
-      const savedPost = await post.save()
-      res.status(200).send(JSON.stringify({'message': 'Posted!'}))
-    } catch(error){
-      res.status(500).send(JSON.stringify({'message': 'Internal server error'}))
-    }
-})
+    const savedPodcast = await post.save();
+    res.status(201).json(savedPodcast);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 
 export default router

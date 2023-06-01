@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema({
+const postSchema = mongoose.Schema({
   artist_name: { type: String, unique: true, required: true },
   title: { type: String, unique: true, required: true },
   description: { type: String },
@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
   apply_watermark: { type: Boolean, default: true },
 });
 
-var Posts = mongoose.model("Posts", userSchema);
+
+var Posts = mongoose.model("Posts", postSchema);
 
 export default Posts;

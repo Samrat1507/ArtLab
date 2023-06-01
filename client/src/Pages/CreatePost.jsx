@@ -10,6 +10,7 @@ const CreatePost = () => {
     description: "",
     amt: "",
     file: null,
+    artist_name:"",
   });
 
   useEffect(() => {
@@ -30,26 +31,35 @@ const CreatePost = () => {
       if (data.status == 401) {
         nav("/login");
       }
+      else{
+        setFormData({...formData,artist_name:data.artist_name})
+      }
     };
     validate();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { title, description, amt, file } = formData;
+    const { title, description, amt, file, artist_name } = formData;
 
     const data = new FormData(); 
     data.append("title", title);
     data.append("description", description);
     data.append("amt", amt);
     data.append("file", file);
-
-    try {
-      await axios.post("http://localhost:5000/post/create", data)
-      alert("Podcast added successfully");
-    } catch (error) {
-      console.error("Error adding podcast:", error);
+    data.append("artist_name",artist_name);
+    
+    const token = localStorage.getItem("userToken");
+try {
+  await axios.post("http://localhost:5000/post/create", data, {
+    headers: {
+      "token": token
     }
+  });
+  alert("Podcast added successfully");
+} catch (error) {
+  console.error("Error adding podcast:", error);
+}
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
