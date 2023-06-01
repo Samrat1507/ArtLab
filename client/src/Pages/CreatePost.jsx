@@ -1,7 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
+
   const [File, setFile] = useState("");
+  const nav = new useNavigate()
+
+  useEffect(()=> {
+    const validate = async () => {
+      const token = sessionStorage.getItem("userToken")
+      if(!token){
+        nav('/login')
+      }
+        const res = await fetch('http://localhost:5000/user/auth', {
+          method: 'GET',
+          headers: {
+            'x-access-token': token,
+          },
+        })
+  
+        const data = await res.json();
+
+        if(data.status == 401){
+          nav('/login')
+        }
+        
+      }
+      validate()
+  }, [])
+
   return (
     <div className="py-10 md:px-20 px-10 flex  flex-col gap-10 items-center">
       <h2 className="sub-header-text">Create a Post</h2>
