@@ -25,14 +25,14 @@ const Login = () => {
       },
       
     })
-    const res= await response.json()
-    // console.log(res)
-    if(res.message==='400'){
-      seterr('Login failed')
-      console.log(err)}
-    else{
-      seterr('')
+    const data= await response.json()
+    if(data.user){
+      // alert("success")
+      sessionStorage.setItem("userToken",data.user)
       nav('/feed')
+    }
+    else{
+      alert("F in chat")
     }
   }
   return (

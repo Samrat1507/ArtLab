@@ -53,19 +53,22 @@ export const Feed = () => {
 
   useEffect(() => {
       const ftechData = async() => {
-        const res = await fetch('http://localhost:5000/feed', {
+        const token = sessionStorage.getItem("userToken")
+        const res = await fetch('http://localhost:5000/user/feed', {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
+            'x-access-token': token,
           },
         })
   
         const data = await res.json();
-        console.log(data)
-        if(data.message!='Authenticated'){
-          // console.log(data.message)
+        if(data.status!=401)
+          console.log(data)
+        else{
+          console.log(data.status)
           nav('/login')
         }
+        
       }
       ftechData()
   }, []);
