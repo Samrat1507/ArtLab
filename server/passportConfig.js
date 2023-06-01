@@ -35,6 +35,7 @@ export default function initializePassport(passport) {
 }
 
 export function isAuthenticated(req, res, done) {
+  console.log(req.user)
   if(req.user) return done();
 
   res.status(401).send(JSON.stringify({'message': "Not Authenticated"}))

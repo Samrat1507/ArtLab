@@ -26,7 +26,7 @@ const Login = () => {
       
     })
     const res= await response.json()
-    console.log(res)
+    // console.log(res)
     if(res.message==='400'){
       seterr('Login failed')
       console.log(err)}
