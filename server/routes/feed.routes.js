@@ -7,6 +7,7 @@ const router = express.Router();
 initializingPassport(passport)
 
 router.route('/').get( (req, res) => {
+    // console.log(req.user)
     res.json({ message: 'Authenticated' });
 });
 

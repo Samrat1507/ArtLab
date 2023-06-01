@@ -19,7 +19,12 @@ router.route('/register').post(async (req, res) => {
 })
 
 router.route('/login').post(passport.authenticate("local", { failureFlash: true }), (req, res)=> {
-    res.status(200).send(JSON.stringify({message:"Logged in"}));
+    // console.log(req.body)
+    res.status(200).send(JSON.stringify(
+        {
+            message:"Logged in",
+
+    }));
 })
 
 export default router;

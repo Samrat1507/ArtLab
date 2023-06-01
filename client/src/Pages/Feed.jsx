@@ -61,11 +61,11 @@ export const Feed = () => {
         })
   
         const data = await res.json();
-  
+        console.log(data)
         if(data.message!='Authenticated'){
-          console.log(data.message)
+          // console.log(data.message)
           nav('/login')
-        } 
+        }
       }
       ftechData()
   }, []);
