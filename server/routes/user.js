@@ -28,9 +28,6 @@ router.route('/login').post(async(req,res)=>{
         res.send(JSON.stringify({status:404}))
     if(!(await user.comparePassword(data.password)))
         res.send(JSON.stringify({status:401}))
-        // res.send(JSON.stringify({status:200,user:user}))
-    // console.log(user)
-    // console.log(SECRET)
     const token=jwt.sign({
         email: data.email,
     },SECRET)
@@ -40,8 +37,6 @@ router.route('/login').post(async(req,res)=>{
 
 router.route('/feed').get((req,res)=>{
     const token=req.headers['x-access-token']
-    // console.log(SECRET)
-    // console.log(token)
     try{
         const decoded=jwt.verify(token,SECRET)
         console.log(decoded)
