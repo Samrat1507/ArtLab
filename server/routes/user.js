@@ -38,20 +38,32 @@ router.route('/login').post(async(req,res)=>{
 
 })
 
-router.route('/feed').get((req,res)=>{
+router.route('/auth').get(async(req,res)=>{
     const token=req.headers['x-access-token']
     // console.log(SECRET)
     // console.log(token)
     try{
         const decoded=jwt.verify(token,SECRET)
-        console.log(decoded)
-        res.send(decoded)
+        const email = decoded.email
+        const user = await User.findOne({ email :email})
+        
+        
+        res.send(JSON.stringify({
+            email:user.email,
+            artist_name:user.artist_name,
+            createdAt: user.createdAt,
+            profile_photo: user.profile_photo,
+            watermark: user.watermark_photo,
+        }))
     }catch(err){
-        console.log(err)
+        console.error(err)
         res.send(JSON.stringify({status:401}))
     }
     
-    res.send(JSON.stringify({msg:"ok"}))
+   
 })
 
 export default router
+
+
+

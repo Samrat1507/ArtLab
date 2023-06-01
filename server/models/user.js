@@ -19,7 +19,12 @@ const userSchema = mongoose.Schema({
     },
     watermark_photo: {
         type: Buffer,
-    }
+    },
+    type: {
+        type: String,
+        default: "artist",
+    },
+
 })
 
 userSchema.pre("save", async function(next) {

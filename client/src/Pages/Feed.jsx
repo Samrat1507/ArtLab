@@ -54,7 +54,7 @@ export const Feed = () => {
   useEffect(() => {
       const ftechData = async() => {
         const token = sessionStorage.getItem("userToken")
-        const res = await fetch('http://localhost:5000/user/feed', {
+        const res = await fetch('http://localhost:5000/user/auth', {
           method: 'GET',
           headers: {
             'x-access-token': token,
@@ -70,8 +70,21 @@ export const Feed = () => {
         }
         
       }
+      
+
       ftechData()
   }, []);
+
+  // const getData = async() => {
+  //   const token = sessionStorage.getItem("userToken")
+  //   const res = await fetch('http://localhost:5000/user/feed', {
+  //     method: 'GET',
+  //     headers: {
+  //       'x-access-token': token,
+  //     },
+  //   })
+  // }
+
 
   return (
     <div className='flex flex-col gap-10 md:px-20 px-10 py-10'>
