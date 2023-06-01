@@ -3,8 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
 
-  const [File, setFile] = useState("");
+  // const [File, setFile] = useState("");
+  const img=new FormData()
   const nav = new useNavigate()
+
+  const [details, setDetails] = useState({
+    title:"",
+    desc:"",
+    img:"",
+    watermark:false,
+  })
 
   useEffect(()=> {
     const validate = async () => {
@@ -29,6 +37,36 @@ const CreatePost = () => {
       validate()
   }, [])
 
+  const handleSubmit=async(e)=>{
+    e.preventDefault()
+    img.append("img",File)
+    const response=await fetch('http://localhost:5000/post/create',{
+      method:'POST',
+      body:JSON.stringify({formdetails:details,file:img}),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      
+    })
+    const data= await response.json()
+    console.log(data)
+  }
+  const handleChange=(e)=>{
+    const {name,value}=e.target
+    setDetails({...details,[name]:value});
+  }
+
+  const convertToBase64=(e)=>{
+    var reader=new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+    reader.onload=()=>{
+      console.log(reader.result)
+    }
+    reader.onerror=(error)=>{
+      console.log(error)
+    }
+    //edit this
+  }
   return (
     <div className="py-10 md:px-20 px-10 flex  flex-col gap-10 items-center">
       <h2 className="sub-header-text">Create a Post</h2>
@@ -37,16 +75,22 @@ const CreatePost = () => {
           <input
             type="text"
             placeholder="Title"
+            onChange={handleChange}
+            name="title"
             className="px-5 py-2 rounded-xl outline-none"
           />
           <input
             type="text"
             placeholder="Description"
+            onChange={handleChange}
+            name="desc"
             className="px-5 py-2 rounded-xl outline-none"
           />
           <input
             type="text"
             placeholder="Starting Amount"
+            onChange={handleChange}
+            name="amt"
             className="px-5 py-2 rounded-xl outline-none"
           />
           <div className="flex gap-2 text-white ">
@@ -60,12 +104,15 @@ const CreatePost = () => {
         type="file"
         id="file-upload"
         accept='image/*'
-        onChange={(e)=>setFile(e.target.files[0])}
+        onChange={convertToBase64}
         />
         <label htmlFor="file-upload" className='py-10 text-xl'>Upload a File</label>
       </div>
         </div>
       </form>
+      <button type="submit"
+      onClick={handleSubmit}
+      >Submit</button>
     </div>
   );
 };

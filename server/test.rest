@@ -1,1 +1,1 @@
-http://localhost:5000/user/feed
+http://localhost:5000/

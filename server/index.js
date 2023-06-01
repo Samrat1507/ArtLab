@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import * as dotenv from "dotenv";
 import userRoute from "./routes/user.js"
+import postRoute from "./routes/posts.js"
 // import passport from "passport";
 
 dotenv.config();
@@ -15,6 +16,8 @@ app.get('/',(req,res)=>{res.send("John Doe")})
 
 // app.use('/feed', feedRoute);
 app.use('/user', userRoute);
+app.use('/post', postRoute);
+
 
 const CONNECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;

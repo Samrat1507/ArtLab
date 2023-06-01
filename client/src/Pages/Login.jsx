@@ -53,14 +53,14 @@ const Login = () => {
           <input
             type="text"
             placeholder="Your Email"
-            className="py-2 rounded-lg active:border-none px-10"
+            className="py-2 rounded-lg active:border-none px-10 outline-none"
             name="email"
             onChange={handleChange}
           />
           <input
             type="password"
             placeholder="You Password"
-            className="py-2 rounded-lg active:border-none px-10"
+            className="py-2 rounded-lg active:border-none px-10 outline-none"
             name="password"
             onChange={handleChange}
           />
