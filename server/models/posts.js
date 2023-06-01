@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
-  art_image: { type: Buffer, required: true },
+  art_image: { type: String, required: true },
   apply_watermark: { type: Boolean, default: true },
 });
 

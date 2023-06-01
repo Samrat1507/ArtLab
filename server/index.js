@@ -10,6 +10,8 @@ import postRoute from "./routes/posts.js"
 dotenv.config();
 const app=express();
 app.use(bodyParser.json());
+app.use(bodyParser.text({limit:'200mb'}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get('/',(req,res)=>{res.send("John Doe")})

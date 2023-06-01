@@ -15,10 +15,10 @@ const userSchema = mongoose.Schema({
         default: new Date(),
     },
     profile_photo: {
-        type: Buffer,
+        type: String,
     },
     watermark_photo: {
-        type: Buffer,
+        type: String,
     },
     type: {
         type: String,
