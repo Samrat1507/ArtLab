@@ -4,6 +4,7 @@ import Landing from './Pages/Landing'
 import SignUp from './Pages/SignUp'
 import Login from './Pages/Login'
 import { Feed } from './Pages/Feed'
+import CreatePost from './Pages/CreatePost'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <Route path='/signup' element={<SignUp />}/>
       <Route path='/login' element={<Login />}/>
       <Route path='/feed' element={<Feed />}/>
+      <Route path='/create' element={<CreatePost />}/>
     </Routes>
     </BrowserRouter>
   )
