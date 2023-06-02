@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.11.0",
     "multer": "^1.4.5-lts.1",
+    "node": "^14.20.1",
     "wide-align": "^1.1.5"
   },
   "devDependencies": {
