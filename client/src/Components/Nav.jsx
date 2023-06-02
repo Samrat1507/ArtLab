@@ -11,7 +11,9 @@ const Nav = () => {
                 <a href="#features">
                 <li className='text-orange-400 text-lg cursor-pointer hover:text-orange-300'>Features</li>
                 </a>
+                <a href='#guidelines'>
                 <li className='text-orange-400 text-lg cursor-pointer hover:text-orange-300'>Guidelines</li>
+                </a>
             </ul>
         </nav>
     </div>

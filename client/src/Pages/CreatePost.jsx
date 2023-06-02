@@ -59,7 +59,7 @@ const CreatePost = () => {
       });
       setAlert("Posted!");
     } catch (error) {
-      console.error("Error adding podcast:", error);
+      console.error("Error adding Image:", error);
     }
   };
   const handleChange = (e) => {
