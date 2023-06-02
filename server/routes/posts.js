@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import Posts from "../models/posts.js";
+import User from "../models/user.js";
 import path from "path"
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -22,20 +22,38 @@ const upload = multer({ storage: storage });
 
 const router = express.Router();
 
-router.route("/create").post(upload.single('file'), async (req,res)=>{
+router.route("/updateprofile").post(upload.single('file'), async (req,res)=>{
   try {
-    const post = new Posts({
-      title: req.body.title,
-      description: req.body.description,
-      amt: req.body.amt,
-      artist_name: req.body.artist_name,
-       // Use fileType instead of req.body.type
-      
-      art_image: req.file.filename,
+    const post = new User({
+      artist_name: req.body.username,
+      profile_photo: req.file.filename,
     });
 
     const savedPodcast = await post.save();
     res.status(201).json(savedPodcast);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.route("/updatewatermark").post(upload.single('file'), async (req,res)=>{
+  try {
+    const { email } = req.body.email; // Assuming you have a userId to identify the user
+
+    // Find the user by the userId
+    const user = await User.findById(email);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the watermark property with the new filename
+    user.water_mark = req.file.filename;
+
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });

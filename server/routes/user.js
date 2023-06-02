@@ -2,6 +2,24 @@ import express from 'express'
 import User from "../models/user.js";
 import jwt from "jsonwebtoken"
 import * as dotenv from "dotenv";
+import multer from 'multer';
+
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const router=express.Router()
 dotenv.config();
@@ -57,7 +75,12 @@ router.route('/auth').get(async(req,res)=>{
    
 })
 
+router.route("/:filename").get((req,res)=>{
+    const {filename}=req.params
+    console.log(__dirname)
+    const imagePath=path.join(__dirname,"..","uploads",filename)
+    console.log(imagePath)
+    res.sendFile(imagePath)
+})
+
 export default router
-
-
-
