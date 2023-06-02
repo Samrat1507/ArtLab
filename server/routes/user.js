@@ -3,6 +3,7 @@ import User from "../models/user.js";
 import jwt from "jsonwebtoken"
 import * as dotenv from "dotenv";
 import multer from 'multer';
+import path from 'path';
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -66,7 +67,7 @@ router.route('/auth').get(async(req,res)=>{
             artist_name:user.artist_name,
             createdAt: user.createdAt,
             profile_photo: user.profile_photo,
-            watermark: user.watermark_photo,
+            watermark_photo: user.watermark_photo,
         }))
     }catch(err){
         console.error(err)
@@ -74,6 +75,46 @@ router.route('/auth').get(async(req,res)=>{
     }
    
 })
+
+router.route("/updateprofile").post(upload.single('file'), async (req,res)=>{
+    try {
+        const { email } = req.body.email; 
+        const user = await User.findOne(email);
+    
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        user.profile_photo = req.file.filename;
+        user.artist_name = req.body.username;
+    
+        const updatedUser = await user.save();
+    
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+
+router.route("/updatewatermark").post(upload.single('file'), async (req,res)=>{
+    try {
+        const { email } = req.body.email; 
+        const user = await User.findOne(email);
+    
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        user.watermark_photo = req.file.filename;
+    
+        const updatedUser = await user.save();
+    
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 router.route("/:filename").get((req,res)=>{
     const {filename}=req.params

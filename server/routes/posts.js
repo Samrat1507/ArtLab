@@ -30,8 +30,6 @@ router.route("/create").post(upload.single('file'), async (req,res)=>{
         description: req.body.description,
         amt: req.body.amt,
         artist_name: req.body.artist_name,
-         // Use fileType instead of req.body.type
-  
         art_image: req.file.filename,
       })
 
@@ -61,6 +59,5 @@ router.route("/:filename").get((req,res)=>{
   const imagePath=path.join(__dirname,"..","uploads",filename)
   console.log(imagePath)
   res.sendFile(imagePath)
-  // res.send("ok")
 })
 export default router

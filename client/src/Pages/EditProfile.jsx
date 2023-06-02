@@ -33,14 +33,13 @@ const EditProfile = () => {
 
       const data = await res.json();
       if (data.status != 401) {
-        setUser({...user, email : data.email})
-        setUser({...user, username : data.artist_name})
-        if(data.profile_photo) {
-          setUser({...user, profilePic: data.profile_photo})
-        }
-        if(data.watermark) {
-          setUser({...user, watermark: data.watermark})
-        }
+        setUser({
+          ...user,
+          email: data.email,
+          username: data.artist_name,
+          profilePic: data.profile_photo || user.profilePic,
+          watermark: data.watermark_photo || user.watermark
+        });
       } else {
         nav("/login");
       }
