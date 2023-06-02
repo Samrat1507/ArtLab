@@ -80,6 +80,7 @@ router.route("/updateprofile").post(upload.single('file'), async (req,res)=>{
     try {
         const data = req.body
         const user = await User.findOne({email:data.email});
+        console.log(data)
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -99,8 +100,8 @@ router.route("/updateprofile").post(upload.single('file'), async (req,res)=>{
 
 router.route("/updatewatermark").post(upload.single('file'), async (req,res)=>{
     try {
-        const { email } = req.body.email; 
-        const user = await User.findOne(email);
+        const data = req.body; 
+        const user = await User.findOne({email: data.email});
     
         if (!user) {
           return res.status(404).json({ message: "User not found" });

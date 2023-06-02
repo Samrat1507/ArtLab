@@ -44,13 +44,31 @@ const EditProfile = () => {
     const { name, value } = e.target
     setProfile({ ...profile, [name]: value })
     const data=new FormData()
-    const token=sessionStorage.getItem("userToken")
     data.append("artist_name",profile.artist_name)
     data.append("file",profile.file)
     data.append("email",profile.email)
     try{
 
       await axios.post("http://localhost:5000/user/updateprofile", data, {
+        headers: {
+            "Content-Type":"application/json"
+        },
+      });
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  const uploadWatermark = async (e) => {
+    e.preventDefault()
+
+    const data=new FormData()
+    data.append("file",water.file)
+    data.append("email",water.email)
+    console.log(water)
+    try{
+
+      await axios.post("http://localhost:5000/user/updatewatermark", data, {
         headers: {
             "Content-Type":"application/json"
         },
@@ -69,6 +87,7 @@ const EditProfile = () => {
     e.preventDefault()
     setWater({ ...water, file: e.target.files[0] })
   }
+
   return (
     <div className="text-white">
       <form action="">
@@ -91,7 +110,7 @@ const EditProfile = () => {
           name="file"
           onChange={handleProfilePic}
           type="file" />
-        <button type="submit">Change</button>
+        <button type="submit" onClick={handleName}>Change</button>
       </form>
 
       <form action="">
@@ -100,7 +119,7 @@ const EditProfile = () => {
           name="file"
           onChange={handleWater}
           type="file" />
-        <button type="submit">Change</button>
+        <button type="submit" onClick={uploadWatermark}>Change</button>
       </form>
 
 
