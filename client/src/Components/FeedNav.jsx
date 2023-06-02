@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useNavigate } from "react-router-dom";
+
 const Nav = () => {
+  
+  const gotoo = new useNavigate();
   return (
     <div className='fixed top-0 left-0 w-full z-50'>
       <nav className='bg-primary'>
@@ -16,6 +20,7 @@ const Nav = () => {
           <li onClick={(e)=>{
             e.preventDefault()
             sessionStorage.removeItem("userToken")
+            gotoo("/");
           }} className='text-orange-400 text-lg cursor-pointer hover:text-orange-300'>Logout</li>
           </Link>
         </ul>

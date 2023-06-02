@@ -54,6 +54,12 @@ const EditProfile = () => {
     }
   }
 
+  const handleNameChange=(e)=>{
+    e.preventDefault()
+    const {name,value}=e.target
+    setProfile({...profile,[name]:value})
+  }
+
   const uploadWatermark = async (e) => {
     e.preventDefault()
     const { email, file} = water
@@ -89,7 +95,7 @@ const EditProfile = () => {
           name="artist_name"
           value={profile.artist_name}
           type="text"
-          onChange={handleName}
+          onChange={handleNameChange}
           placeholder={profile.artist_name} />
         <button
           onClick={handleName}
@@ -118,7 +124,7 @@ const EditProfile = () => {
       </form>
 
       <button className="w-fit h-fit px-10 py-2 rounded-xl bg-gradient-to-b from-[#FA8E6F] to-[#D93382] hover:bg-gradient-to-t text-white mt-20"
-        onClick={nav('/feed')}
+        onClick={(e)=>nav('/feed')}
       >
         Back
       </button>
