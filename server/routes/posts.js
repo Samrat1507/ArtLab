@@ -47,10 +47,6 @@ router.route("/create").post(upload.single('file'), async (req,res)=>{
 router.route("/feed").get( async (req, res) => {
   try {
     const getPosts = await Posts.find();
-    getPosts.map(async(post)=>{
-      const user=await User.findOne({artist_name:post.artist_name})
-      post.watermark=user.watermark_photo
-    })
     res.json(getPosts);
    
   } catch (error) {

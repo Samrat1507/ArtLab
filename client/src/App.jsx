@@ -8,12 +8,13 @@ import CreatePost from './Pages/CreatePost'
 import EditProfile from './Pages/EditProfile'
 
 function App() {
-  const handleContextMenu = (event) => {
-    event.preventDefault(); // Prevent the default right-click behavior
-  };
+  // const handleContextMenu = (event) => {
+  //   event.preventDefault(); // Prevent the default right-click behavior
+  // };
     return (
     <BrowserRouter>
-    <div onContextMenu={handleContextMenu}>
+    {/* <div onContextMenu={handleContextMenu}> */}
+    <div>
     <Routes>
       <Route path='/' element={<Landing />}/>
       <Route path='/signup' element={<SignUp />}/>

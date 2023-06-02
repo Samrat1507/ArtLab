@@ -32,7 +32,6 @@ router.route('/register').post(async(req,res)=>{
         await user.save();
         res.status(200).send(JSON.stringify({message:"user created successfully"}));
     } catch(error) {
-        console.log(error);
         res.status(400).send(JSON.stringify({message:"400"}));
     }
 })
@@ -70,8 +69,25 @@ router.route('/auth').get(async(req,res)=>{
             watermark_photo: user.watermark_photo,
         }))
     }catch(err){
-        console.error(err)
         res.send(JSON.stringify({status:401}))
+    }
+   
+})
+
+router.route('/findUser').post(async(req,res)=>{
+    try{
+        const name = req.body.artist_name
+        const user = await User.findOne({ artist_name :name})
+        
+        
+        res.send(JSON.stringify({
+            artist_name:user.artist_name,
+            createdAt: user.createdAt,
+            profile_photo: user.profile_photo,
+            watermark_photo: user.watermark_photo,
+        }))
+    }catch(err){
+        res.send(JSON.stringify({status:500}))
     }
    
 })
@@ -80,7 +96,6 @@ router.route("/updateprofile").post(upload.single('file'), async (req,res)=>{
     try {
         const data = req.body
         const user = await User.findOne({email:data.email});
-        console.log(data)
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -88,11 +103,9 @@ router.route("/updateprofile").post(upload.single('file'), async (req,res)=>{
         user.artist_name = req.body.artist_name;
         
         const updatedUser = await user.save();
-        console.log(updatedUser)
     
         res.status(200).json(updatedUser);
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: "Internal server error" });
     }
 });
@@ -112,16 +125,13 @@ router.route("/updatewatermark").post(upload.single('file'), async (req,res)=>{
     
         res.status(200).json(updatedUser);
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: "Internal server error" });
     }
 });
 
 router.route("/:filename").get((req,res)=>{
     const {filename}=req.params
-    console.log(__dirname)
     const imagePath=path.join(__dirname,"..","uploads",filename)
-    console.log(imagePath)
     res.sendFile(imagePath)
 })
 

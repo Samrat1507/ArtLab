@@ -17,7 +17,7 @@ const Login = () => {
 
   const handleSubmit=async (e)=>{
     e.preventDefault()
-    const response=await fetch('https://artlab-3629.onrender.com/user/login',{
+    const response=await fetch('http://localhost:5000/user/login',{
       method:'POST',
       body:JSON.stringify(details),
       headers: {

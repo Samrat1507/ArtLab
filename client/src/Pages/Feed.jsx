@@ -3,30 +3,56 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Nav from "../Components/FeedNav";
 
-const PostCard = ({ title, desc, art_image, artist, profile_pic, _id, watermark }) => {
-  console.log(art_image);
+const PostCard = ({ title, desc, art_image, artist, upvotes, amt }) => {
+  const [watermark, setwatermark] = useState(null)
+  const [profilephoto, setprofilephoto] = useState(null)
+  const [Liked, setLiked] = useState(false)
+  useEffect(()=> {
+    const getPictures = async () => {
+      const response = await fetch('http://localhost:5000/user/findUser', {
+        method: 'POST',
+        body: JSON.stringify({
+          artist_name: artist,
+        })
+      })
+
+      const data = await response.json();
+      setwatermark(data.watermark_photo || 'default')
+      setprofilephoto(data.profile_photo || 'default')
+    } 
+
+    getPictures();
+  }, [])
+
+  const toggleLike = () => {
+    setLiked(!Liked)
+  }
   return (
-    <div className='flex flex-col w-fit h-fit bg-black rounded-lg pb-5'>
+    <div className='flex flex-col w-fit h-fit bg-gradient-to-tr from-[#7a4534] to-[#65173d] rounded-lg pb-5'>
       <div className='flex flex-row gap-5 px-5 py-2 items-center'>
-        <img src={`https://artlab-3629.onrender.com/post/${profile_pic}`} alt="artist_profile_photo" className='rounded-full h-14 w-14' />
+        <img src={profilephoto!='default' ? `http://localhost:5000/post/${profilephoto}` : 'pfp.svg'} alt="artist_profile_photo" className='rounded-full h-10 w-10' />
         <h3 className='text-white'>{artist}</h3>
       </div>
       <div className='relative'>
-        <img src={`https://artlab-3629.onrender.com/post/${art_image}`} alt="artwork" className='rounded-lg h-72 w-72' />
-        {/* {watermark && (
-          <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-            <p className='text-white text-3xl opacity-30'>{watermark}</p>
-          </div>
-        )} */}
-        <img src="cube.png" alt="watermark" className='absolute top-0 opacity-30 left-0' />
+        <img src={`http://localhost:5000/post/${art_image}`} alt="artwork" className='rounded-lg h-72 w-72 object-fit px-2' />
+        <img src={watermark!='default'? `http://localhost:5000/post/${watermark}` : "cube.png"} alt="watermark" className='absolute top-0 opacity-30 left-0' />
       </div>
-      <div className='flex flex-row gap-10 px-5 py-2'>
-        <p className='text-white cursor-pointer'>Like</p>
-        <p className='text-white cursor-pointer'>Report</p>
+      <div className='flex flex-row justify-between px-5 py-2'>
+        <div className='flex gap-1 items-center'>
+          <img src={Liked? 'liked.svg': 'unliked.svg'} alt="like" className='h-5 w-5 cursor-pointer' onClick={toggleLike}/>
+        <p className='text-white cursor-pointer'>{upvotes}</p>
+        </div>
+        <div className='flex gap-1 items-center'>
+        <p className='text-white cursor-pointer text-xs'>Not original?</p>
+        <img src="report.svg" alt="report" className='h-5 w-5'/>
+        </div>
       </div>
       <div className='flex flex-col gap-4 px-5 py-2'>
-        <h2 className='text-white text-3xl'>{title}</h2>
+        <h2 className='text-white text-3xl font-bold'>{title}</h2>
         <p className='text-white'>{desc}</p>
+      </div>
+      <div className='px-5'>
+        <p className='text-slate-400 text-xs'>Rs. {amt}</p>
       </div>
     </div>
   );
@@ -45,12 +71,12 @@ export const Feed = () => {
   useEffect(() => {
     
     const fetchPosts = async () => {
-      const response = await axios.get('https://artlab-3629.onrender.com/post/feed');
+      const response = await axios.get('http://localhost:5000/post/feed');
       setposts(response.data)
     };
       const ftechData = async() => {
         const token = sessionStorage.getItem("userToken")
-        const res = await fetch('https://artlab-3629.onrender.com/user/auth', {
+        const res = await fetch('http://localhost:5000/user/auth', {
           method: 'GET',
           headers: {
             'x-access-token': token,
@@ -59,7 +85,10 @@ export const Feed = () => {
   
         const data = await res.json();
         if(data.status!=401){
-          
+          setUser({...User, 
+            artist_name: data.artist_name,
+            profile_pic: data.profile_photo || profile_pic,
+          })
         }
         else{
           nav('/login')
@@ -73,12 +102,12 @@ export const Feed = () => {
 
   return (
     <div>
-      <Nav/>
+      <Nav artist_name={User.artist_name} profile_pic={User.profile_pic || 'default'}/>
     <div className=' pt-20 flex flex-col gap-10 md:px-20 px-10 py-10'>
       <h1 className='header-text'>Feed</h1>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-5 grid-cols-1'>
       {posts.map((post, index)=> (
-        <PostCard title={post.title} art_image={post.art_image} profile_pic={post.profile_pic} artist={post.artist_name} desc={post.description} key={index} _id={post._id}/>
+        <PostCard title={post.title} amt={post.amt} art_image={post.art_image} artist={post.artist_name} desc={post.description} key={index} _id={post._id} upvotes={post.upvote}/>
       ))}
       </div>
     </div>
