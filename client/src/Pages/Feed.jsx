@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import Nav from "../Components/FeedNav";
 
 const PostCard = ({title, desc, art_image, artist, profile_pic, _id}) => {
   console.log(art_image)
@@ -71,13 +72,16 @@ export const Feed = () => {
     console.log(posts)
 
   return (
-    <div className='flex flex-col gap-10 md:px-20 px-10 py-10'>
+    <div>
+      <Nav/>
+    <div className=' pt-20 flex flex-col gap-10 md:px-20 px-10 py-10'>
       <h1 className='header-text'>Feed</h1>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-5 grid-cols-1'>
       {posts.map((post, index)=> (
         <PostCard title={post.title} art_image={post.art_image} profile_pic={post.profile_pic} artist={post.artist_name} desc={post.description} key={index} _id={post._id}/>
       ))}
       </div>
+    </div>
     </div>
   )
 }
