@@ -41,19 +41,14 @@ const EditProfile = () => {
 
   const handleName = async (e) => {
     e.preventDefault()
-    const { name, value } = e.target
-    setProfile({ ...profile, [name]: value })
+    const { artist_name, email, file} = profile
     const data=new FormData()
-    data.append("artist_name",profile.artist_name)
-    data.append("file",profile.file)
-    data.append("email",profile.email)
+    data.append("artist_name",artist_name)
+    data.append("file", file)
+    data.append("email", email)
     try{
 
-      await axios.post("http://localhost:5000/user/updateprofile", data, {
-        headers: {
-            "Content-Type":"application/json"
-        },
-      });
+      await axios.post("http://localhost:5000/user/updateprofile", data);
     }catch(err){
       console.log(err)
     }
@@ -61,18 +56,14 @@ const EditProfile = () => {
 
   const uploadWatermark = async (e) => {
     e.preventDefault()
-
+    const { email, file} = water
     const data=new FormData()
-    data.append("file",water.file)
-    data.append("email",water.email)
+    data.append("file",file)
+    data.append("email",email)
     console.log(water)
     try{
 
-      await axios.post("http://localhost:5000/user/updatewatermark", data, {
-        headers: {
-            "Content-Type":"application/json"
-        },
-      });
+      await axios.post("http://localhost:5000/user/updatewatermark", data);
     }catch(err){
       console.log(err)
     }
