@@ -1,7 +1,12 @@
 import express from "express";
 import multer from "multer";
 import Posts from "../models/posts.js";
+import path from "path"
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,11 +21,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const router = express.Router();
-
-router.route("/feed").get((req,res )=>{
-    //const token = req.headers[]
-    res.send("OK");
-})
 
 router.route("/create").post(upload.single('file'), async (req,res)=>{
   try {
@@ -53,5 +53,12 @@ router.route("/feed").get( async (req, res) => {
   }
 });
 
-
+router.route("/:filename").get((req,res)=>{
+  const {filename}=req.params
+  console.log(__dirname)
+  const imagePath=path.join(__dirname,"..","uploads",filename)
+  console.log(imagePath)
+  res.sendFile(imagePath)
+  // res.send("ok")
+})
 export default router
