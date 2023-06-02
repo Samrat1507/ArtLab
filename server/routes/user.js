@@ -78,16 +78,16 @@ router.route('/auth').get(async(req,res)=>{
 
 router.route("/updateprofile").post(upload.single('file'), async (req,res)=>{
     try {
-        const { email } = req.body.email; 
-        const user = await User.findOne(email);
-    
+        const data = req.body
+        const user = await User.findOne({email:data.email});
         if (!user) {
-          return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: "User not found" });
         }
         user.profile_photo = req.file.filename;
-        user.artist_name = req.body.username;
-    
+        user.artist_name = req.body.artist_name;
+        
         const updatedUser = await user.save();
+        console.log(updatedUser)
     
         res.status(200).json(updatedUser);
     } catch (err) {
