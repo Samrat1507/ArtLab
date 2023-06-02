@@ -54,7 +54,6 @@ router.route('/auth').get(async(req,res)=>{
         console.error(err)
         res.send(JSON.stringify({status:401}))
     }
-    
    
 })
 
