@@ -13,7 +13,10 @@ const Nav = () => {
             <li className='text-orange-400 text-lg cursor-pointer hover:text-orange-300'>Profile</li>
           </Link>
           <Link to='/login'>
-          <li className='text-orange-400 text-lg cursor-pointer hover:text-orange-300'>Logout</li>
+          <li onClick={(e)=>{
+            e.preventDefault()
+            sessionStorage.removeItem("userToken")
+          }} className='text-orange-400 text-lg cursor-pointer hover:text-orange-300'>Logout</li>
           </Link>
         </ul>
       </nav>
