@@ -17,7 +17,7 @@ function App() {
       <Route path='/login' element={<Login />}/>
       <Route path='/feed' element={<Feed />}/>
       <Route path='/create' element={<CreatePost />}/>
-      <Route path='/edit-profile' element={<EditProfile />}/>
+      <Route path='/editprofile' element={<EditProfile />}/>
     </Routes>
     </BrowserRouter>
   )
