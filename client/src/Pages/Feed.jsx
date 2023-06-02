@@ -8,7 +8,8 @@ const PostCard = ({ title, desc, art_image, artist, profile_pic, _id, watermark 
   return (
     <div className='flex flex-col w-fit h-fit bg-black rounded-lg pb-5'>
       <div className='flex flex-row gap-5 px-5 py-2 items-center'>
-        <img src={`https://artlab-3629.onrender.com/post/${profile_pic}`} alt="artist_profile_photo" className='rounded-full h-14 w-14' />
+        <img src="default-pfp.svg" alt="artist_profile_photo" className='rounded-full h-14 w-14' />
+        {/* <img src={`https://artlab-3629.onrender.com/post/${profile_pic}`} alt="artist_profile_photo" className='rounded-full h-14 w-14' /> */}
         <h3 className='text-white'>{artist}</h3>
       </div>
       <div className='relative'>
