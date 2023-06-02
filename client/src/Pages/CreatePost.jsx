@@ -50,11 +50,11 @@ const CreatePost = () => {
     data.append("file", file);
     data.append("artist_name", artist_name);
 
-    const token = sessionStorage.getItem("userToken");
+    const token = sessionStorage.getItem("userToken")
     try {
       await axios.post("https://artlab-3629.onrender.com/post/create", data, {
         headers: {
-          token: token,
+          "x-access-token": token,
         },
       });
       setAlert("Posted!");
