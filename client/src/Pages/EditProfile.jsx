@@ -80,11 +80,12 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="text-white">
-      <form action="">
+    <div className="text-white md:px-20 px-10 py-10 flex flex-col gap-10">
+      <h1 className="sub-header-text">Edit Your Profile</h1>
+      <form action="" className="flex justify-evenly mt-10">
         <span>Username</span>
         <input
-          className="text-black"
+          className="text-black px-5 py-1 outline-none rounded-lg"
           name="artist_name"
           value={profile.artist_name}
           type="text"
@@ -92,27 +93,35 @@ const EditProfile = () => {
           placeholder={profile.artist_name} />
         <button
           onClick={handleName}
-          type="submit">Change Name</button>
+          type="submit"
+          className="w-fit h-fit px-10 py-2 rounded-xl bg-gradient-to-b from-[#FA8E6F] to-[#D93382] hover:bg-gradient-to-t text-white">
+            Change
+        </button>
       </form>
 
-      <form action="">
+      <form action="" className="flex justify-evenly">
         <span>Profile Picture</span>
         <input
           name="file"
           onChange={handleProfilePic}
           type="file" />
-        <button type="submit" onClick={handleName}>Change</button>
+        <button type="submit" onClick={handleName} className="w-fit h-fit px-10 py-2 rounded-xl bg-gradient-to-b from-[#FA8E6F] to-[#D93382] hover:bg-gradient-to-t text-white">Change</button>
       </form>
 
-      <form action="">
+      <form action="" className="flex justify-evenly">
         <span>Watermark</span>
         <input
           name="file"
           onChange={handleWater}
           type="file" />
-        <button type="submit" onClick={uploadWatermark}>Change</button>
+        <button type="submit" onClick={uploadWatermark} className="w-fit h-fit px-10 py-2 rounded-xl bg-gradient-to-b from-[#FA8E6F] to-[#D93382] hover:bg-gradient-to-t text-white">Change</button>
       </form>
 
+      <button className="w-fit h-fit px-10 py-2 rounded-xl bg-gradient-to-b from-[#FA8E6F] to-[#D93382] hover:bg-gradient-to-t text-white mt-20"
+        onClick={nav('/feed')}
+      >
+        Back
+      </button>
 
     </div>
   )
