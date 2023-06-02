@@ -9,7 +9,7 @@ const PostCard = ({ title, desc, art_image, artist, upvotes, amt }) => {
   const [Liked, setLiked] = useState(false)
   useEffect(()=> {
     const getPictures = async () => {
-      const response = await fetch('http://localhost:5000/user/findUser', {
+      const response = await fetch('https://artlab-3629.onrender.com/user/findUser', {
         method: 'POST',
         body: JSON.stringify({
           artist_name: artist,
@@ -30,12 +30,12 @@ const PostCard = ({ title, desc, art_image, artist, upvotes, amt }) => {
   return (
     <div className='flex flex-col w-fit h-fit bg-gradient-to-tr from-[#7a4534] to-[#65173d] rounded-lg pb-5'>
       <div className='flex flex-row gap-5 px-5 py-2 items-center'>
-        <img src={profilephoto!='default' ? `http://localhost:5000/post/${profilephoto}` : 'pfp.svg'} alt="artist_profile_photo" className='rounded-full h-10 w-10' />
+        <img src={profilephoto!='default' ? `https://artlab-3629.onrender.com/post/${profilephoto}` : 'pfp.svg'} alt="artist_profile_photo" className='rounded-full h-10 w-10' />
         <h3 className='text-white'>{artist}</h3>
       </div>
       <div className='relative'>
-        <img src={`http://localhost:5000/post/${art_image}`} alt="artwork" className='rounded-lg h-72 w-72 object-fit px-2' />
-        <img src={watermark!='default'? `http://localhost:5000/post/${watermark}` : "cube.png"} alt="watermark" className='absolute top-0 opacity-30 left-0' />
+        <img src={`https://artlab-3629.onrender.com/post/${art_image}`} alt="artwork" className='rounded-lg h-72 w-72 object-fit px-2' />
+        <img src={watermark!='default'? `https://artlab-3629.onrender.com/post/${watermark}` : "cube.png"} alt="watermark" className='absolute top-0 opacity-30 left-0' />
       </div>
       <div className='flex flex-row justify-between px-5 py-2'>
         <div className='flex gap-1 items-center'>
@@ -71,12 +71,12 @@ export const Feed = () => {
   useEffect(() => {
     
     const fetchPosts = async () => {
-      const response = await axios.get('http://localhost:5000/post/feed');
+      const response = await axios.get('https://artlab-3629.onrender.com/post/feed');
       setposts(response.data)
     };
       const ftechData = async() => {
         const token = sessionStorage.getItem("userToken")
-        const res = await fetch('http://localhost:5000/user/auth', {
+        const res = await fetch('https://artlab-3629.onrender.com/user/auth', {
           method: 'GET',
           headers: {
             'x-access-token': token,

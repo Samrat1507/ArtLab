@@ -23,7 +23,7 @@ const Nav = ({artist_name, profile_pic}) => {
           <Link to='/editprofile'>
             <li className='text-orange-400 text-lg cursor-pointer hover:text-orange-300 flex gap-5 items-center'>
               <span>{artist_name}</span>
-              <img src={profile_pic!='default'?`http://localhost:5000/user/${profile_pic}`: 'pfp.svg'} alt="user_profile_photo" className='h-10 w-10 rounded-full'/>
+              <img src={profile_pic!='default'?`https://artlab-3629.onrender.com/user/${profile_pic}`: 'pfp.svg'} alt="user_profile_photo" className='h-10 w-10 rounded-full'/>
             </li>
           </Link>
         </ul>
