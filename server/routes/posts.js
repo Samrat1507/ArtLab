@@ -4,6 +4,7 @@ import Posts from "../models/posts.js";
 import path from "path"
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import User from "../models/user.js"
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +47,10 @@ router.route("/create").post(upload.single('file'), async (req,res)=>{
 router.route("/feed").get( async (req, res) => {
   try {
     const getPosts = await Posts.find();
+    getPosts.map(async(post)=>{
+      const user=await User.findOne({artist_name:post.artist_name})
+      post.watermark=user.watermark_photo
+    })
     res.json(getPosts);
    
   } catch (error) {

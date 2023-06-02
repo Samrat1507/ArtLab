@@ -8,16 +8,17 @@ const PostCard = ({ title, desc, art_image, artist, profile_pic, _id, watermark 
   return (
     <div className='flex flex-col w-fit h-fit bg-black rounded-lg pb-5'>
       <div className='flex flex-row gap-5 px-5 py-2 items-center'>
-        <img src={profile_pic} alt="artist_profile_photo" className='rounded-full h-14 w-14' />
+        <img src={`https://artlab-3629.onrender.com/post/${profile_pic}`} alt="artist_profile_photo" className='rounded-full h-14 w-14' />
         <h3 className='text-white'>{artist}</h3>
       </div>
       <div className='relative'>
         <img src={`https://artlab-3629.onrender.com/post/${art_image}`} alt="artwork" className='rounded-lg h-72 w-72' />
-        {watermark && (
+        {/* {watermark && (
           <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
             <p className='text-white text-3xl opacity-30'>{watermark}</p>
           </div>
-        )}
+        )} */}
+        <img src="cube.png" alt="watermark" className='absolute top-0 opacity-30 left-0' />
       </div>
       <div className='flex flex-row gap-10 px-5 py-2'>
         <p className='text-white cursor-pointer'>Like</p>
@@ -35,7 +36,6 @@ export const Feed = () => {
   const nav = new useNavigate();
   
   const [posts, setposts] = useState([])
-
   const [User, setUser] = useState({
     artist_name : '',
     profile_pic : null,
@@ -43,7 +43,7 @@ export const Feed = () => {
 
   const [url, seturl] = useState('')
   useEffect(() => {
-
+    
     const fetchPosts = async () => {
       const response = await axios.get('https://artlab-3629.onrender.com/post/feed');
       setposts(response.data)
@@ -70,13 +70,6 @@ export const Feed = () => {
       ftechData();
       fetchPosts();
     }, []);
-    
-    const geturl = async(path) => {
-      const response = await axios.get(`https://artlab-3629.onrender.com/post/${path}`);
-      seturl(response.data);
-    }
-
-    console.log(posts)
 
   return (
     <div>
