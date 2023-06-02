@@ -20,7 +20,7 @@ const EditProfile = () => {
       if (!token) {
         nav("/login");
       }
-      const res = await fetch("http://localhost:5000/user/auth", {
+      const res = await fetch("https://artlab-3629.onrender.com/user/auth", {
         method: "GET",
         headers: {
           "x-access-token": token,
@@ -48,7 +48,7 @@ const EditProfile = () => {
     data.append("email", email)
     try{
 
-      await axios.post("http://localhost:5000/user/updateprofile", data);
+      await axios.post("https://artlab-3629.onrender.com/user/updateprofile", data);
     }catch(err){
       console.log(err)
     }
@@ -63,7 +63,7 @@ const EditProfile = () => {
     console.log(water)
     try{
 
-      await axios.post("http://localhost:5000/user/updatewatermark", data);
+      await axios.post("https://artlab-3629.onrender.com/user/updatewatermark", data);
     }catch(err){
       console.log(err)
     }

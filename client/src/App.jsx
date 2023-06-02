@@ -8,9 +8,12 @@ import CreatePost from './Pages/CreatePost'
 import EditProfile from './Pages/EditProfile'
 
 function App() {
-
-  return (
+  const handleContextMenu = (event) => {
+    event.preventDefault(); // Prevent the default right-click behavior
+  };
+    return (
     <BrowserRouter>
+    <div onContextMenu={handleContextMenu}>
     <Routes>
       <Route path='/' element={<Landing />}/>
       <Route path='/signup' element={<SignUp />}/>
@@ -19,6 +22,7 @@ function App() {
       <Route path='/create' element={<CreatePost />}/>
       <Route path='/editprofile' element={<EditProfile />}/>
     </Routes>
+    </div>
     </BrowserRouter>
   )
 }

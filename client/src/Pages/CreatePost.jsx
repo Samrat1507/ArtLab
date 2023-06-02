@@ -21,7 +21,7 @@ const CreatePost = () => {
       if (!token) {
         nav("/login");
       }
-      const res = await fetch("http://localhost:5000/user/auth", {
+      const res = await fetch("https://artlab-3629.onrender.com/user/auth", {
         method: "GET",
         headers: {
           "x-access-token": token,
@@ -52,7 +52,7 @@ const CreatePost = () => {
 
     const token = localStorage.getItem("userToken");
     try {
-      await axios.post("http://localhost:5000/post/create", data, {
+      await axios.post("https://artlab-3629.onrender.com/post/create", data, {
         headers: {
           token: token,
         },

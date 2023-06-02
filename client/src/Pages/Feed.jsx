@@ -12,7 +12,7 @@ const PostCard = ({ title, desc, art_image, artist, profile_pic, _id, watermark 
         <h3 className='text-white'>{artist}</h3>
       </div>
       <div className='relative'>
-        <img src={`http://localhost:5000/post/${art_image}`} alt="artwork" className='rounded-lg h-72 w-72' />
+        <img src={`https://artlab-3629.onrender.com/post/${art_image}`} alt="artwork" className='rounded-lg h-72 w-72' />
         {watermark && (
           <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
             <p className='text-white text-3xl opacity-30'>{watermark}</p>
@@ -45,12 +45,12 @@ export const Feed = () => {
   useEffect(() => {
 
     const fetchPosts = async () => {
-      const response = await axios.get('http://localhost:5000/post/feed');
+      const response = await axios.get('https://artlab-3629.onrender.com/post/feed');
       setposts(response.data)
     };
       const ftechData = async() => {
         const token = sessionStorage.getItem("userToken")
-        const res = await fetch('http://localhost:5000/user/auth', {
+        const res = await fetch('https://artlab-3629.onrender.com/user/auth', {
           method: 'GET',
           headers: {
             'x-access-token': token,
@@ -72,7 +72,7 @@ export const Feed = () => {
     }, []);
     
     const geturl = async(path) => {
-      const response = await axios.get(`http://localhost:5000/post/${path}`);
+      const response = await axios.get(`https://artlab-3629.onrender.com/post/${path}`);
       seturl(response.data);
     }
 
