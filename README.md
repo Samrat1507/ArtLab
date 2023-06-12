@@ -7,6 +7,7 @@ Introducing ArtLab: The ultimate online haven for artists! Our platform is desig
 
 ## Features
 
+
 ![image](https://github.com/Samrat1507/ArtLab/assets/98039377/d32d8730-8501-4da5-9158-45a17eb6282d)
 
 Discover the endless possibilities of ArtLab's innovative features. From seamless artwork uploads to engaging social interactions, our platform empowers artists to showcase their talent, connect with a vibrant community, and unlock new opportunities for creative growth.
